@@ -11,6 +11,7 @@ import { loginUserSchema } from "@shared/schema";
 import { type z } from "zod";
 import { AnimatedCat } from "@/components/AnimatedCat";
 import { useToast } from "@/hooks/use-toast";
+import { validateLogin, saveCurrentUser } from "@/lib/auth";
 
 type LoginFormData = z.infer<typeof loginUserSchema>;
 
@@ -31,19 +32,29 @@ export default function Login() {
   const onSubmit = async (data: LoginFormData) => {
     setIsLoading(true);
     try {
-      // Simular login por enquanto
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      toast({
-        title: "Login realizado!",
-        description: "Bem-vinda de volta ao CicloFácil!",
-      });
+      const user = validateLogin(data.email, data.password);
       
-      setLocation("/");
+      if (user) {
+        saveCurrentUser(user);
+        toast({
+          title: "Login realizado!",
+          description: `Bem-vinda de volta, ${user.name}!`,
+        });
+        
+        setLocation("/calendar");
+      } else {
+        toast({
+          title: "Erro no login",
+          description: "Email ou senha incorretos.",
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Erro no login",
-        description: "Email ou senha incorretos.",
+        description: "Ocorreu um erro durante o login.",
         variant: "destructive",
       });
     } finally {

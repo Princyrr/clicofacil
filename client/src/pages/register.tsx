@@ -11,6 +11,7 @@ import { insertUserSchema } from "@shared/schema";
 import { z } from "zod";
 import { AnimatedCat } from "@/components/AnimatedCat";
 import { useToast } from "@/hooks/use-toast";
+import { saveUser, saveCurrentUser } from "@/lib/auth";
 
 const registerSchema = insertUserSchema.extend({
   confirmPassword: z.string().min(6, "Confirmação de senha é obrigatória"),
@@ -41,15 +42,22 @@ export default function Register() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     try {
-      // Simular cadastro por enquanto
       await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      const newUser = saveUser({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
+      
+      saveCurrentUser(newUser);
       
       toast({
         title: "Conta criada com sucesso!",
-        description: "Bem-vinda ao CicloFácil!",
+        description: `Bem-vinda ao CicloFácil, ${newUser.name}!`,
       });
       
-      setLocation("/");
+      setLocation("/calendar");
     } catch (error) {
       toast({
         title: "Erro no cadastro",

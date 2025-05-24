@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { ArrowLeft, ChevronLeft, ChevronRight, Settings, Droplet, PieChart } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Settings, Droplet, PieChart, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CalendarDay } from "@/components/CalendarDay";
+import { AnimatedCat } from "@/components/AnimatedCat";
 import { loadCycleData, saveCycleData } from "@/lib/localStorage";
+import { getCurrentUser, logout } from "@/lib/auth";
 import { 
   generateCalendarDays, 
   getCycleStatus, 
@@ -26,8 +28,17 @@ export default function Calendar() {
   const { toast } = useToast();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [cycleInfo, setCycleInfo] = useState<CycleInfo | null>(null);
+  const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
   useEffect(() => {
+    // Check if user is authenticated
+    const user = getCurrentUser();
+    if (!user) {
+      setLocation("/");
+      return;
+    }
+    setCurrentUser(user);
+
     const data = loadCycleData();
     if (data) {
       setCycleInfo({
@@ -78,6 +89,15 @@ export default function Calendar() {
     });
   };
 
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "Logout realizado",
+      description: "Até a próxima!",
+    });
+    setLocation("/");
+  };
+
   if (!cycleInfo) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -95,8 +115,25 @@ export default function Calendar() {
 
   return (
     <div className="min-h-screen flex flex-col p-6">
+      {/* Gatinha Animada */}
+      <div className="flex justify-center pt-4">
+        <AnimatedCat />
+      </div>
+      
+      {/* Saudação do usuário */}
+      {currentUser && (
+        <div className="text-center mb-4">
+          <h2 className="text-xl font-semibold text-foreground">
+            Olá, {currentUser.name}! 👋
+          </h2>
+          <p className="text-muted-foreground">
+            Bem-vinda ao seu calendário menstrual
+          </p>
+        </div>
+      )}
+      
       {/* Header */}
-      <div className="flex items-center justify-between mb-6 pt-8">
+      <div className="flex items-center justify-between mb-6">
         <Button
           variant="ghost"
           size="icon"
