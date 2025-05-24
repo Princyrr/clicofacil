@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { saveCycleData, loadCycleData } from "@/lib/localStorage";
 import { useToast } from "@/hooks/use-toast";
+import { AnimatedCat } from "@/components/AnimatedCat";
 
 const setupSchema = z.object({
   cycleDuration: z.number().min(21, "Ciclo deve ter pelo menos 21 dias").max(35, "Ciclo deve ter no máximo 35 dias"),
@@ -76,8 +77,13 @@ export default function Setup() {
 
   return (
     <div className="min-h-screen flex flex-col p-6">
+      {/* Gatinha Animada */}
+      <div className="flex justify-center pt-4">
+        <AnimatedCat />
+      </div>
+      
       {/* Header */}
-      <div className="flex items-center justify-between mb-8 pt-8">
+      <div className="flex items-center justify-between mb-8">
         <Button
           variant="ghost"
           size="icon"

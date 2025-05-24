@@ -1,14 +1,18 @@
 import { Link } from "wouter";
-import { Calendar, Settings, TrendingUp, Bell, Heart } from "lucide-react";
+import { Calendar, Settings, TrendingUp, Bell, Heart, LogIn, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { hasCycleData } from "@/lib/localStorage";
+import { AnimatedCat } from "@/components/AnimatedCat";
 
 export default function Welcome() {
   const hasData = hasCycleData();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6">
+      {/* Gatinha Animada */}
+      <AnimatedCat />
+      
       <Card className="w-full max-w-md mx-auto shadow-xl">
         <CardContent className="p-8 text-center">
           {/* Logo */}
@@ -26,24 +30,46 @@ export default function Welcome() {
 
           {/* Action Buttons */}
           <div className="space-y-4">
-            <Link href="/setup">
+            <Link href="/login">
               <Button className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                <Settings className="mr-2 h-4 w-4" />
-                Configurar Ciclo
+                <LogIn className="mr-2 h-4 w-4" />
+                Entrar
               </Button>
             </Link>
             
-            {hasData && (
-              <Link href="/calendar">
+            <Link href="/register">
+              <Button 
+                variant="outline" 
+                className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300"
+              >
+                <UserPlus className="mr-2 h-4 w-4" />
+                Criar Conta
+              </Button>
+            </Link>
+            
+            <div className="flex space-x-2">
+              <Link href="/setup" className="flex-1">
                 <Button 
                   variant="outline" 
-                  className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300"
+                  className="w-full border-2 border-secondary text-secondary hover:bg-secondary hover:text-white font-medium py-3 px-4 rounded-xl transition-all duration-300"
                 >
-                  <Calendar className="mr-2 h-4 w-4" />
-                  Ver Calendário
+                  <Settings className="mr-2 h-4 w-4" />
+                  Setup
                 </Button>
               </Link>
-            )}
+              
+              {hasData && (
+                <Link href="/calendar" className="flex-1">
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-2 border-secondary text-secondary hover:bg-secondary hover:text-white font-medium py-3 px-4 rounded-xl transition-all duration-300"
+                  >
+                    <Calendar className="mr-2 h-4 w-4" />
+                    Calendário
+                  </Button>
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* App Features */}
