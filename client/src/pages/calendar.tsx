@@ -167,14 +167,25 @@ export default function Calendar() {
           </Button>
         </div>
 
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setLocation("/setup")}
-          className="w-10 h-10 bg-white rounded-full shadow-md hover:shadow-lg"
-        >
-          <Settings className="h-4 w-4" />
-        </Button>
+        <div className="flex space-x-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setLocation("/setup")}
+            className="w-10 h-10 bg-white rounded-full shadow-md hover:shadow-lg"
+          >
+            <Settings className="h-4 w-4" />
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleLogout}
+            className="w-10 h-10 bg-white rounded-full shadow-md hover:shadow-lg"
+          >
+            <LogOut className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       {/* Cycle Info */}
