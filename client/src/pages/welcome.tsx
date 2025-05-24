@@ -46,7 +46,7 @@ export default function Welcome() {
                 <Link href="/register">
                   <Button 
                     variant="outline" 
-                    className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300"
+                    className=" mt-3.5 w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300"
                   >
                     <UserPlus className="mr-2 h-4 w-4" />
                     Criar Conta
@@ -75,7 +75,7 @@ export default function Welcome() {
                 <Link href="/setup">
                   <Button 
                     variant="outline" 
-                    className="w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300"
+                    className="mt-3.5  w-full border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold py-4 px-6 rounded-2xl transition-all duration-300"
                   >
                     <Settings className="mr-2 h-4 w-4" />
                     Configurar Ciclo
